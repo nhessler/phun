@@ -14,8 +14,8 @@ config :phun, Phun.Repo,
 # debugging and code reloading.
 #
 # The watchers configuration can be used to run external
-# watchers to your application. For example, we use it
-# with esbuild to bundle .js and .css sources.
+# watchers to your application. For example, we can use it
+# to bundle .js and .css sources.
 config :phun, PhunWeb.Endpoint,
   # Binding to loopback ipv4 address prevents access from other machines.
   # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
@@ -23,7 +23,7 @@ config :phun, PhunWeb.Endpoint,
   check_origin: false,
   code_reloader: true,
   debug_errors: true,
-  secret_key_base: "x83y12Syb5ZY5yfka3fp2fW/vs8i6oUIB9Xz9Iq40K+Xffx8sFf9qJNbStHxytzZ",
+  secret_key_base: "FlTcgKvdX3T75xpYaGB5gF/i3fF9H+3P+ks7/vaLimbwzmFvnqL7NRtqbLh3QAOT",
   watchers: [
     esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]},
     tailwind: {Tailwind, :install_and_run, [:default, ~w(--watch)]}

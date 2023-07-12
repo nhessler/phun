@@ -7,7 +7,7 @@ defmodule PhunWeb.Endpoint do
   @session_options [
     store: :cookie,
     key: "_phun_key",
-    signing_salt: "P8sEXS89",
+    signing_salt: "qkXOM/Qp",
     same_site: "Lax"
   ]
 
