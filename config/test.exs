@@ -17,7 +17,7 @@ config :phun, Phun.Repo,
 # you can enable the server option below.
 config :phun, PhunWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4002],
-  secret_key_base: "/04Ahr7WBC0v8iVBbifaM1B85MSBTxCBydVSXIqC5qvdwlcl2h1q3Ha5xZFc6uES",
+  secret_key_base: "wQoGephEUMSDh7iM3RGcJl9kTM1k1MpTWKhU10dQtleMg6g93EXzdpBtdfv54jSW",
   server: false
 
 # In test we don't send emails.
