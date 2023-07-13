@@ -1,9 +1,11 @@
 defmodule PhunWeb.CountLive do
   use PhunWeb, :live_view
 
+  alias Phun.Counter
+  
   def render(assigns) do
     ~H"""
-    <h1 class="text-4xl">Count <%= @count %></h1>
+    <h1 class="text-4xl">Count <%= Counter.show(@count) %></h1>
     <button
       phx-click="inc"
       class="rounded-lg bg-zinc-900 hover:bg-zinc-700
@@ -13,10 +15,10 @@ defmodule PhunWeb.CountLive do
   end
 
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, :count, 0)}
+    {:ok, assign(socket, :count, Counter.new())}
   end
 
   def handle_event("inc", _meta, socket) do
-    {:noreply, assign(socket, :count, socket.assigns.count + 1)}
+    {:noreply, assign(socket, :count, Counter.inc(socket.assigns.count))}
   end
 end
