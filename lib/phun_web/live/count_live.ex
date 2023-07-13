@@ -11,6 +11,14 @@ defmodule PhunWeb.CountLive do
       class="rounded-lg bg-zinc-900 hover:bg-zinc-700
       py-2 px-3 text-sm font-semibold leading-6
       text-white active:text-white/80">Inc</button>
+
+    <hr/>
+
+    <div class="grid grid-cols-3 gap-4">
+    <%= for t <- 1..12 do %>
+      <.game table_number={t} />
+    <% end %>
+    </div>
     """
   end
 
@@ -20,5 +28,12 @@ defmodule PhunWeb.CountLive do
 
   def handle_event("inc", _meta, socket) do
     {:noreply, assign(socket, :count, Counter.inc(socket.assigns.count))}
+  end
+
+  attr :table_number, :integer, required: true
+  defp game(assigns) do
+    ~H"""
+    <div><%= @table_number %></div>
+    """
   end
 end
