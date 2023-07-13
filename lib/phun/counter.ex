@@ -1,18 +1,19 @@
 defmodule Phun.Counter do
-
+  defstruct [:count]
+  
   def new(string \\ "0") do
-    String.to_integer(string)
+    %__MODULE__{count: String.to_integer(string)}
   end
 
-  def inc(count, by \\ 1) do
-    count + by
+  def inc(%__MODULE__{count: count} = counter, by \\ 1) do
+    %{counter | count: count + by}
   end
 
-  def dec(count, by \\ 1) do
-    count - by
+  def dec(%__MODULE__{count: count} = counter, by \\ 1) do
+    %{counter | count: count - by}
   end
 
-  def show(count) do
-    count
+  def show(counter) do
+    counter.count
   end
 end
