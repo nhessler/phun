@@ -9,10 +9,6 @@ defmodule Phun.Counter do
     %{counter | count: count + by}
   end
 
-  def dec(%__MODULE__{count: count} = counter, by \\ 1) do
-    %{counter | count: count - by}
-  end
-
   def show(counter) do
     counter.count
   end
