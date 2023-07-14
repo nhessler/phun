@@ -19,6 +19,7 @@ defmodule PhunWeb.Router do
 
     get "/", PageController, :home
     live "/count", CountLive
+    live "/follow", FollowLive
   end
 
   # Other scopes may use custom stacks.
