@@ -18,4 +18,5 @@ defmodule PhunWeb.PuzzleLive.Show do
 
   defp page_title(:show), do: "Show Puzzle"
   defp page_title(:edit), do: "Edit Puzzle"
+  defp page_title(:points), do: "Edit Points"
 end

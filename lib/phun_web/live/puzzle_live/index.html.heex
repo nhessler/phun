@@ -10,7 +10,7 @@
 <.table
   id="puzzles"
   rows={@streams.puzzles}
-  row_click={fn {_id, puzzle} -> JS.navigate(~p"/puzzles/#{puzzle}") end}
+  row_click={fn {_id, puzzle} -> JS.navigate(~p"/admin/puzzles/#{puzzle}") end}
 >
   <:col :let={{_id, puzzle}} label="Name"><%= puzzle.name %></:col>
   <:col :let={{_id, puzzle}} label="Height"><%= puzzle.height %></:col>
