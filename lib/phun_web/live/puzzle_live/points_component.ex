@@ -16,10 +16,22 @@ defmodule PhunWeb.PuzzleLive.PointsComponent do
     {:noreply, change_cell(socket, x, y)}
   end
 
+  def handle_event("toggle", _meta, socket) do
+    {:noreply, toggle(socket)}
+  end
+
   def handle_event("save", _meta, socket) do
     {:noreply, save(socket)}
   end
 
+  defp toggle(socket) do
+    toggled_grid =
+      socket.assigns.grid
+      |> Enum.into(%{}, fn {point, bool} -> {point, !bool} end)
+    
+    assign(socket, :grid, toggled_grid)
+  end
+    
 
   defp save(socket) do
     puzzle = socket.assigns.puzzle
@@ -79,8 +91,5 @@ defmodule PhunWeb.PuzzleLive.PointsComponent do
   defp color(true), do: "fill-black"
   defp color(false), do: "fill-white"
 
-  defp rect_class(alive), do: "#{color(alive)} #{hover_color(alive)}"
-
-  defp hover_color(true), do: "hover:fill-slate-600"
-  defp hover_color(false), do: "hover:fill-slate-300"
+  defp rect_class(alive), do: "#{color(alive)} hover:opacity-60"
 end
