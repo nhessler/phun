@@ -1,8 +1,6 @@
 defmodule PhunWeb.PuzzleLive.PointsComponent do
   use PhunWeb, :live_component
 
-  alias Phun.Game
-
   @impl true
   def update(%{puzzle: puzzle} = assigns, socket) do
     {:ok,
@@ -11,6 +9,7 @@ defmodule PhunWeb.PuzzleLive.PointsComponent do
      |> assign_grid(puzzle)}
   end
 
+  @impl true
   def handle_event("toggle", %{"x" => x, "y" => y}, socket) do
     {:noreply, change_cell(socket, x, y)}
   end
@@ -43,7 +42,7 @@ defmodule PhunWeb.PuzzleLive.PointsComponent do
   def rect(assigns) do
     ~H"""
     <rect
-      class={hover_class(@alive)}
+      class={rect_class(@alive)}
       phx-click="toggle"
       phx-value-x={@x}
       phx-value-y={@y}
@@ -52,17 +51,15 @@ defmodule PhunWeb.PuzzleLive.PointsComponent do
       y={@y*10}
       width="10"
       height="10"
-      fill={fill_color(@alive)}
       rx="2" />
     """
   end
 
-  defp fill_color(true), do: "black"
-  defp fill_color(false), do: "white"
+  defp color(true), do: "fill-black"
+  defp color(false), do: "fill-white"
 
-  defp hover_class(alive), do: "hover:fill-slate-#{hover_amount(alive)}"
+  defp rect_class(alive), do: "#{color(alive)} #{hover_color(alive)}"
 
-  defp hover_amount(true), do: "600"
-  defp hover_amount(false), do: "400"
-
+  defp hover_color(true), do: "hover:fill-slate-600"
+  defp hover_color(false), do: "hover:fill-slate-300"
 end

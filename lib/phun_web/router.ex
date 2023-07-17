@@ -82,7 +82,8 @@ defmodule PhunWeb.Router do
       live "/puzzles", PuzzleLive.Index, :index
       live "/puzzles/new", PuzzleLive.Index, :new
       live "/puzzles/:id/edit", PuzzleLive.Index, :edit
-
+      live "/puzzles/:id/points", PuzzleLive.Index, :points
+      
       live "/puzzles/:id", PuzzleLive.Show, :show
       live "/puzzles/:id/show/edit", PuzzleLive.Show, :edit
       live "/puzzles/:id/show/points", PuzzleLive.Show, :points

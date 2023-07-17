@@ -6,6 +6,11 @@
       <.button>Edit puzzle</.button>
     </.link>
   </:actions>
+  <:actions>
+    <.link patch={~p"/admin/puzzles/#{@puzzle}/show/points"} phx-click={JS.push_focus()}>
+      <.button>Edit points</.button>
+    </.link>
+  </:actions>
 </.header>
 
 <.back navigate={~p"/admin/puzzles"}>Back to puzzles</.back>

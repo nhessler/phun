@@ -32,6 +32,11 @@ defmodule PhunWeb.PuzzleLive.Index do
     |> assign(:puzzle, nil)
   end
 
+  defp apply_action(socket, :points, %{"id" => id}) do
+    socket
+    |> assign(:puzzle, Game.get_puzzle!(id))
+  end
+
   @impl true
   def handle_info({PhunWeb.PuzzleLive.FormComponent, {:saved, puzzle}}, socket) do
     {:noreply, stream_insert(socket, :puzzles, puzzle)}
