@@ -1,6 +1,8 @@
 defmodule PhunWeb.PuzzleLive.PointsComponent do
   use PhunWeb, :live_component
 
+  alias Phun.Game
+  
   @impl true
   def update(%{puzzle: puzzle} = assigns, socket) do
     {:ok,
@@ -14,7 +16,25 @@ defmodule PhunWeb.PuzzleLive.PointsComponent do
     {:noreply, change_cell(socket, x, y)}
   end
 
+  def handle_event("save", _meta, socket) do
+    {:noreply, save(socket)}
+  end
 
+
+  defp save(socket) do
+    puzzle = socket.assigns.puzzle
+    points =
+      socket.assigns.grid
+      |> Enum.filter(fn {point, alive} -> alive end)
+      |> Enum.map(fn {point, _alive} -> point end)
+
+    Game.save_puzzle_points(puzzle, points)
+
+    socket
+    |> put_flash(:info, "Puzzle Points saved successfully")
+    |> push_patch(to: socket.assigns.patch)
+  end
+  
   defp change_cell(socket, x, y) do
     x = String.to_integer(x)
     y = String.to_integer(y)
@@ -27,9 +47,10 @@ defmodule PhunWeb.PuzzleLive.PointsComponent do
 
 
   defp assign_grid(socket, puzzle) do
+    points = Enum.map(puzzle.points, &{&1.x, &1.y})
     grid =
     for x <- 1..puzzle.width, y <- 1..puzzle.height, into: %{} do
-      {{x, y}, false}
+      {{x, y}, {x, y} in points}
     end
 
     assign(socket, :grid, grid)
