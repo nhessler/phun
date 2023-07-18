@@ -37,7 +37,7 @@ defmodule PhunWeb.PuzzleLive.PointsComponent do
     puzzle = socket.assigns.puzzle
     points =
       socket.assigns.grid
-      |> Enum.filter(fn {point, alive} -> alive end)
+      |> Enum.filter(fn {_point, alive} -> alive end)
       |> Enum.map(fn {point, _alive} -> point end)
 
     Game.save_puzzle_points(puzzle, points)

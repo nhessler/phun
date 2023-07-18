@@ -6,6 +6,7 @@ defmodule PhunWeb.PuzzleLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
+    Game.subscribe_puzzle_changed()
     {:ok, stream(socket, :puzzles, Game.list_puzzles())}
   end
 
@@ -17,7 +18,7 @@ defmodule PhunWeb.PuzzleLive.Index do
   defp apply_action(socket, :edit, %{"id" => id}) do
     socket
     |> assign(:page_title, "Edit Puzzle")
-    |> assign(:puzzle, Game.get_puzzle!(id))
+    |> update_puzzle_points(id)
   end
 
   defp apply_action(socket, :new, _params) do
@@ -37,11 +38,22 @@ defmodule PhunWeb.PuzzleLive.Index do
     |> assign(:puzzle, Game.get_puzzle!(id))
   end
 
+
+  defp update_puzzle_points(socket, id) do
+    assign(socket, :puzzle, Game.get_puzzle!(id))
+  end
+  
   @impl true
   def handle_info({PhunWeb.PuzzleLive.FormComponent, {:saved, puzzle}}, socket) do
     {:noreply, stream_insert(socket, :puzzles, puzzle)}
   end
 
+  def handle_info({:points_changed, puzzle_id}, %{assigns: %{puzzle: %{id: puzzle_id}}}=socket) do
+    {:noreply, update_puzzle_points(socket, puzzle_id)}
+  end
+
+  def handle_info({:points_changed, _puzzle_id}, socket), do: {:noreply, socket}
+  
   @impl true
   def handle_event("delete", %{"id" => id}, socket) do
     puzzle = Game.get_puzzle!(id)

@@ -19,7 +19,7 @@ defmodule Phun.MixProject do
   def application do
     [
       mod: {Phun.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :observer, :wx]
     ]
   end
 

@@ -6,8 +6,12 @@ defmodule Phun.Game do
   import Ecto.Query, warn: false
   alias Ecto.Multi
   alias Phun.Repo
+  alias Phoenix.PubSub
 
   alias Phun.Game.{Puzzle, Point}
+
+  @pubsub Phun.PubSub
+  @points_changed_topic "puzzle-points-changed"
 
   @doc """
   Returns the list of puzzles.
@@ -50,11 +54,26 @@ defmodule Phun.Game do
       %{x: x, y: y, puzzle_id: puzzle.id, inserted_at: ndt, updated_at: ndt}
     end)
 
+    result =
     Multi.new()
     |> Multi.delete_all(:delete_puzzle_points, Ecto.assoc(puzzle, :points))
     |> Multi.insert_all(:insert_puzzle_points, Point, processed_points)
     |> Repo.transaction()
+
+    broadcast_puzzle_changed(puzzle)
+    
+    result
   end
+
+  def broadcast_puzzle_changed(puzzle) do
+    PubSub.broadcast(@pubsub, @points_changed_topic, {:points_changed, puzzle.id})
+  end
+
+  def subscribe_puzzle_changed do
+    PubSub.subscribe(@pubsub, @points_changed_topic)
+  end
+
+  
   
   @doc """
   Creates a puzzle.
